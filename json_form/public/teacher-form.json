@@ -1,0 +1,82 @@
+{
+  "title": "Teacher Registration Form",
+  "fields": [
+    {
+      "name": "fullName",
+      "label": "Full Name",
+      "type": "text",
+      "required": true,
+      "minLength": 3
+    },
+    {
+      "name": "email",
+      "label": "Email Address",
+      "type": "email",
+      "required": true
+    },
+    {
+      "name": "phone",
+      "label": "Phone Number",
+      "type": "text",
+      "required": true
+    },
+    {
+      "name": "dateOfBirth",
+      "label": "Date of Birth",
+      "type": "date",
+      "required": true
+    },
+    {
+      "name": "education",
+      "label": "Highest Education",
+      "type": "select",
+      "required": true,
+      "options": [
+        { "value": "bachelors", "label": "Bachelor's Degree" },
+        { "value": "masters", "label": "Master's Degree" },
+        { "value": "phd", "label": "PhD" },
+        { "value": "other", "label": "Other" }
+      ]
+    },
+    {
+      "name": "subject",
+      "label": "Primary Subject",
+      "type": "select",
+      "required": true,
+      "options": [
+        { "value": "mathematics", "label": "Mathematics" },
+        { "value": "science", "label": "Science" },
+        { "value": "literature", "label": "Literature" },
+        { "value": "history", "label": "History" },
+        { "value": "computerScience", "label": "Computer Science" },
+        { "value": "arts", "label": "Arts" },
+        { "value": "physical", "label": "Physical Education" }
+      ]
+    },
+    {
+      "name": "yearsOfExperience",
+      "label": "Years of Teaching Experience",
+      "type": "number",
+      "required": true
+    },
+    {
+      "name": "certifications",
+      "label": "Certifications",
+      "type": "textarea",
+      "required": false
+    },
+    {
+      "name": "additionalSkills",
+      "label": "Additional Skills",
+      "type": "textarea",
+      "required": false
+    },
+    {
+      "name": "agreedToTerms",
+      "label": "Terms and Conditions",
+      "type": "checkbox",
+      "required": true,
+      "checkboxLabel": "I agree to the terms and conditions"
+    }
+  ]
+}

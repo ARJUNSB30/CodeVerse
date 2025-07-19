@@ -1,0 +1,15 @@
+<div class="container">
+  <h1>Educational Forms System</h1>
+
+ 
+  <div class="form-selector">
+    <label for="formTypeSelect">Select Form Type:</label>
+    <select id="formTypeSelect" (change)="changeForm($event)">
+      <option value="teacher-form">Teacher Registration</option>
+      <option value="student-form">Student Registration</option>
+    </select>
+  </div>
+
+
+  <app-common-from [formType]="selectedFormType"></app-common-from>
+</div>

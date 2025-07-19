@@ -1,0 +1,188 @@
+<!-- <div class="form-container">
+    <h2>{{ formData?.title }}</h2>
+    <form [formGroup]="form" (ngSubmit)="submitForm()">
+      <div *ngFor="let field of formData?.fields" class="form-group">
+        <label>{{ field.label }}</label>
+  
+        <input *ngIf="field.type === 'text'" type="text" [formControlName]="field.name" />
+        <input *ngIf="field.type === 'email'" type="email" [formControlName]="field.name" />
+        <input *ngIf="field.type === 'number'" type="number" [formControlName]="field.name" />
+        <input *ngIf="field.type === 'date'" type="date" [formControlName]="field.name" />
+  
+        <select *ngIf="field.type === 'select'" [formControlName]="field.name">
+          <option value="" disabled>Select an option</option>
+          <option *ngFor="let option of field.options" [value]="option.value">{{ option.label }}</option>
+        </select>
+  
+        <textarea *ngIf="field.type === 'textarea'" [formControlName]="field.name" rows="4"></textarea>
+        
+        <div *ngIf="field.type === 'checkbox'">
+          <input type="checkbox" [formControlName]="field.name" id="{{field.name}}">
+          <label for="{{field.name}}" class="checkbox-label">{{ field.checkboxLabel }}</label>
+        </div>
+      </div>
+  
+      <button type="submit" [disabled]="form.invalid">Submit</button>
+    </form>
+  </div> -->
+
+
+
+<!-- 
+  <div class="form-container">
+  <div class="form-header">
+    <h2>{{ formData?.title }}</h2>
+    
+    <div class="autosave-section">
+      <app-autosave 
+        [value]="autosaveEnabled"
+        activeLabel="Autosave On"
+        inactiveLabel="Autosave Off"
+        (valueChange)="onAutosaveToggle($event)">
+      </app-autosave>
+    </div>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="submitForm()">
+    <div *ngFor="let field of formData?.fields" class="form-group">
+      <label>{{ field.label }}</label>
+
+      <input *ngIf="field.type === 'text'" type="text" [formControlName]="field.name" />
+      <input *ngIf="field.type === 'email'" type="email" [formControlName]="field.name" />
+      <input *ngIf="field.type === 'number'" type="number" [formControlName]="field.name" />
+      <input *ngIf="field.type === 'date'" type="date" [formControlName]="field.name" />
+
+      <select *ngIf="field.type === 'select'" [formControlName]="field.name">
+        <option value="" disabled>Select an option</option>
+        <option *ngFor="let option of field.options" [value]="option.value">{{ option.label }}</option>
+      </select>
+
+      <textarea *ngIf="field.type === 'textarea'" [formControlName]="field.name" rows="4"></textarea>
+      
+      <div *ngIf="field.type === 'checkbox'">
+        <input type="checkbox" [formControlName]="field.name" id="{{field.name}}">
+        <label for="{{field.name}}" class="checkbox-label">{{ field.checkboxLabel }}</label>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="form.invalid">Submit</button>
+  </form>
+</div> -->
+
+
+
+<div class="form-container">
+  <!-- Enhanced Autosave Component -->
+  <app-autosave 
+    #autosaveComponent
+    [value]="autosaveEnabled"
+    [formType]="formType"
+    activeLabel="Autosave On"
+    inactiveLabel="Autosave Off"
+    (valueChange)="onAutosaveToggle($event)"
+    (restoreDataRequested)="onRestoreDataRequested($event)">
+  </app-autosave>
+
+  <!-- Form Header -->
+  <div class="form-header">
+    <h2>{{ formData?.title }}</h2>
+    <div class="form-actions">
+      <button 
+        type="button" 
+        class="btn-save-progress" 
+        (click)="saveProgress()"
+        [disabled]="!hasFormData(form.value)">
+        💾 Save Progress
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Form -->
+  <form [formGroup]="form" (ngSubmit)="submitForm()">
+    <div *ngFor="let field of formData?.fields" class="form-group">
+      <label [for]="field.name">
+        {{ field.label }}
+        <span *ngIf="field.required" class="required-indicator">*</span>
+      </label>
+
+      <input 
+        *ngIf="field.type === 'text'" 
+        type="text" 
+        [id]="field.name"
+        [formControlName]="field.name" 
+        [placeholder]="field.placeholder || ''" />
+
+      <input 
+        *ngIf="field.type === 'email'" 
+        type="email" 
+        [id]="field.name"
+        [formControlName]="field.name" 
+        [placeholder]="field.placeholder || 'Enter your email'" />
+
+      <input 
+        *ngIf="field.type === 'number'" 
+        type="number" 
+        [id]="field.name"
+        [formControlName]="field.name" 
+        [placeholder]="field.placeholder || ''" />
+
+      <input 
+        *ngIf="field.type === 'date'" 
+        type="date" 
+        [id]="field.name"
+        [formControlName]="field.name" />
+
+      <select 
+        *ngIf="field.type === 'select'" 
+        [id]="field.name"
+        [formControlName]="field.name">
+        <option value="" disabled>Select an option</option>
+        <option *ngFor="let option of field.options" [value]="option.value">
+          {{ option.label }}
+        </option>
+      </select>
+
+      <textarea 
+        *ngIf="field.type === 'textarea'" 
+        [id]="field.name"
+        [formControlName]="field.name" 
+        rows="4"
+        [placeholder]="field.placeholder || ''">
+      </textarea>
+      
+      <div *ngIf="field.type === 'checkbox'" class="checkbox-group">
+        <input 
+          type="checkbox" 
+          [formControlName]="field.name" 
+          [id]="field.name">
+        <label [for]="field.name" class="checkbox-label">
+          {{ field.checkboxLabel || field.label }}
+        </label>
+      </div>
+
+      <!-- Field Validation Messages -->
+      <div *ngIf="form.get(field.name)?.invalid && form.get(field.name)?.touched" 
+           class="field-error">
+        <span *ngIf="form.get(field.name)?.errors?.['required']">
+          {{ field.label }} is required
+        </span>
+        <span *ngIf="form.get(field.name)?.errors?.['email']">
+          Please enter a valid email address
+        </span>
+        <span *ngIf="form.get(field.name)?.errors?.['minlength']">
+          {{ field.label }} must be at least {{ field.minLength }} characters
+        </span>
+      </div>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="form-footer">
+      <button type="submit" class="btn-submit" [disabled]="form.invalid">
+        Submit Form
+      </button>
+      <button type="button" class="btn-reset" (click)="form.reset()">
+        Reset Form
+      </button>
+    </div>
+  </form>
+</div>

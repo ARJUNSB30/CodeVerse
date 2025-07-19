@@ -1,0 +1,62 @@
+<!-- <div class="toggle-container" (click)="toggle()">
+  <div class="toggle-switch" [class.active]="value">
+    <div class="toggle-label">{{ value ? activeLabel : inactiveLabel }}</div>
+    <div class="toggle-knob"></div>
+  </div>
+</div>
+<p>autosave works!</p> -->
+
+
+
+<div class="autosave-container">
+  <!-- Restore Data Prompt -->
+  <div *ngIf="showRestorePrompt" class="restore-prompt">
+    <div class="restore-content">
+      <div class="restore-icon">💾</div>
+      <div class="restore-message">
+        <strong>Saved form data found!</strong>
+        <p>We found form data you were working on. Would you like to restore it?</p>
+        <small *ngIf="lastSavedTime">Last saved: {{ lastSavedTime }}</small>
+      </div>
+      <div class="restore-actions">
+        <button class="btn-restore" (click)="restoreData()">Restore</button>
+        <button class="btn-dismiss" (click)="dismissRestore()">Start Fresh</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Autosave Toggle and Status -->
+  <div class="autosave-controls">
+    <div class="toggle-section">
+      <div class="toggle-container" (click)="toggle()">
+        <div class="toggle-switch" [class.active]="value">
+          <div class="toggle-label">{{ value ? activeLabel : inactiveLabel }}</div>
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status Information -->
+    <div class="autosave-status" *ngIf="value || hasSavedData">
+      <div class="status-indicators">
+        <div *ngIf="value" class="status-item enabled">
+          <span class="status-icon">🟢</span>
+          <span class="status-text">Auto-saving enabled</span>
+        </div>
+        
+        <div *ngIf="hasSavedData" class="status-item saved">
+          <span class="status-icon">💾</span>
+          <span class="status-text">Data saved</span>
+          <small *ngIf="lastSavedTime">({{ lastSavedTime }})</small>
+        </div>
+      </div>
+
+      <!-- Clear Data Option -->
+      <div *ngIf="hasSavedData" class="clear-data-section">
+        <button class="btn-clear" (click)="clearSavedData()" title="Clear saved form data">
+          🗑️ Clear Saved Data
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
