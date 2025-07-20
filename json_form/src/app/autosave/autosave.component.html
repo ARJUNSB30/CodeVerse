@@ -1,6 +1,6 @@
 
 <div class="autosave-container">
-  <!-- Restore Data Prompt -->
+
   <div *ngIf="showRestorePrompt" class="restore-prompt">
     <div class="restore-content">
       <div class="restore-icon">💾</div>
@@ -16,7 +16,6 @@
     </div>
   </div>
 
-  <!-- Autosave Toggle and Status -->
   <div class="autosave-controls">
     <div class="toggle-section">
       <div class="toggle-container" (click)="toggle()">
@@ -27,7 +26,6 @@
       </div>
     </div>
 
-    <!-- Status Information -->
     <div class="autosave-status" *ngIf="value || hasSavedData">
       <div class="status-indicators">
         <div *ngIf="value" class="status-item enabled">
@@ -42,7 +40,6 @@
         </div>
       </div>
 
-      <!-- Clear Data Option -->
       <div *ngIf="hasSavedData" class="clear-data-section">
         <button class="btn-clear" (click)="clearSavedData()" title="Clear saved form data">
           🗑️ Clear Saved Data

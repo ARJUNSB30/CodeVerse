@@ -1,4 +1,3 @@
-
 import { Component, Input, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormService } from '../form.service';
@@ -66,7 +65,6 @@ export class CommonFromComponent implements OnInit, OnDestroy {
       this.form.addControl(field.name, this.fb.control(field.defaultValue || '', validators));
     });
 
-    // Subscribe to form changes for autosave
     this.form.valueChanges.subscribe((formValue) => {
       if (this.autosaveEnabled && this.hasFormData(formValue)) {
         this.scheduleAutosave(formValue);
@@ -74,7 +72,6 @@ export class CommonFromComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Handle autosave toggle change
   onAutosaveToggle(enabled: boolean) {
     this.autosaveEnabled = enabled;
     if (!enabled && this.autosaveTimer) {
@@ -83,15 +80,13 @@ export class CommonFromComponent implements OnInit, OnDestroy {
     console.log('Autosave is now:', enabled ? 'enabled' : 'disabled');
   }
 
-  // Handle restore data request from autosave component
   onRestoreDataRequested(savedData: any) {
     if (savedData && this.form) {
-      // Patch the form with saved data
+     
       try {
         this.form.patchValue(savedData);
         console.log('Form data restored successfully');
         
-        // Show user feedback
         this.showNotification('Your previous form data has been restored!', 'success');
       } catch (error) {
         console.error('Error restoring form data:', error);
@@ -100,7 +95,6 @@ export class CommonFromComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Schedule autosave with debounce
   private scheduleAutosave(formValue: any) {
     if (this.autosaveTimer) {
       clearTimeout(this.autosaveTimer);
@@ -110,8 +104,6 @@ export class CommonFromComponent implements OnInit, OnDestroy {
       this.performAutosave(formValue);
     }, this.AUTOSAVE_DELAY);
   }
-
-  // Perform autosave
   private performAutosave(formValue: any) {
     if (this.autosaveEnabled && this.autosaveComponent && this.hasFormData(formValue)) {
       this.autosaveComponent.saveFormData(formValue);
@@ -119,11 +111,8 @@ export class CommonFromComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Check if form has meaningful data to save
   public hasFormData(formValue: any): boolean {
     if (!formValue) return false;
-    
-    // Check if at least one field has a non-empty value
     return Object.values(formValue).some(value => {
       if (typeof value === 'string') {
         return value.trim().length > 0;
@@ -131,8 +120,6 @@ export class CommonFromComponent implements OnInit, OnDestroy {
       return value !== null && value !== undefined && value !== '';
     });
   }
-
-  // Submit form and clear autosaved data
   submitForm() {
     if (!this.form.valid) {
       this.showNotification('Please fill in all required fields', 'error');
@@ -141,7 +128,6 @@ export class CommonFromComponent implements OnInit, OnDestroy {
   
     this.formService.submitFormData(this.formType, this.form.value).subscribe({
       next: (response) => {
-        // Clear autosaved data on successful submission
         if (this.autosaveComponent) {
           this.autosaveComponent.clearSavedData();
         }
@@ -157,7 +143,6 @@ export class CommonFromComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Manual save option
   saveProgress() {
     if (this.hasFormData(this.form.value) && this.autosaveComponent) {
       this.autosaveComponent.saveFormData(this.form.value);
@@ -167,9 +152,7 @@ export class CommonFromComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Simple notification system (you can replace with a proper toast service)
   private showNotification(message: string, type: 'success' | 'error' | 'warning') {
-    // This is a simple implementation - you might want to use a proper toast library
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
     notification.textContent = message;
@@ -198,8 +181,7 @@ export class CommonFromComponent implements OnInit, OnDestroy {
     }
     
     document.body.appendChild(notification);
-    
-    // Remove notification after 3 seconds
+   
     setTimeout(() => {
       if (notification.parentNode) {
         notification.parentNode.removeChild(notification);

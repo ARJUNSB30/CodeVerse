@@ -33,7 +33,6 @@ export class AutosaveComponent implements OnInit {
     this.valueChange.emit(this.value);
     
     if (!this.value) {
-      // If autosave is turned off, ask user if they want to clear saved data
       this.clearSavedDataIfNeeded();
     }
   }

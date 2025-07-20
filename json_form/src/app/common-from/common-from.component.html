@@ -1,6 +1,4 @@
-
 <div class="form-container">
-  <!-- Enhanced Autosave Component -->
   <app-autosave 
     #autosaveComponent
     [value]="autosaveEnabled"
@@ -11,7 +9,6 @@
     (restoreDataRequested)="onRestoreDataRequested($event)">
   </app-autosave>
 
-  <!-- Form Header -->
   <div class="form-header">
     <h2>{{ formData?.title }}</h2>
     <div class="form-actions">
@@ -19,7 +16,6 @@
     </div>
   </div>
 
-  <!-- Main Form -->
   <form [formGroup]="form" (ngSubmit)="submitForm()">
     <div *ngFor="let field of formData?.fields" class="form-group">
       <label [for]="field.name">
@@ -81,8 +77,6 @@
           {{ field.checkboxLabel || field.label }}
         </label>
       </div>
-
-      <!-- Field Validation Messages -->
       <div *ngIf="form.get(field.name)?.invalid && form.get(field.name)?.touched" 
            class="field-error">
         <span *ngIf="form.get(field.name)?.errors?.['required']">
@@ -96,8 +90,6 @@
         </span>
       </div>
     </div>
-
-    <!-- Form Actions -->
     <div class="form-footer">
       <button type="submit" class="btn-submit" [disabled]="form.invalid">
         Submit Form

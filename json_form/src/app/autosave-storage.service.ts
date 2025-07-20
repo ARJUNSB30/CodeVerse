@@ -8,10 +8,6 @@ export class AutosaveStorageService {
   private readonly EXPIRY_DAYS = 7; // Data expires after 7 days
 
   constructor() {}
-
-  /**
-   * Save form data to localStorage with timestamp
-   */
   saveFormData(formType: string, formData: any): void {
     try {
       const storageKey = this.getStorageKey(formType);
@@ -27,10 +23,6 @@ export class AutosaveStorageService {
       console.error('Failed to save form data:', error);
     }
   }
-
-  /**
-   * Retrieve form data from localStorage
-   */
   getFormData(formType: string): any {
     try {
       const storageKey = this.getStorageKey(formType);
@@ -41,8 +33,7 @@ export class AutosaveStorageService {
       }
 
       const parsedData = JSON.parse(storedData);
-      
-      // Check if data has expired
+     
       if (this.isDataExpired(parsedData.timestamp)) {
         this.clearFormData(formType);
         return null;
@@ -54,18 +45,11 @@ export class AutosaveStorageService {
       return null;
     }
   }
-
-  /**
-   * Check if saved data exists for a form type
-   */
   hasFormData(formType: string): boolean {
     const data = this.getFormData(formType);
     return data !== null && Object.keys(data).length > 0;
   }
 
-  /**
-   * Clear saved form data
-   */
   clearFormData(formType: string): void {
     try {
       const storageKey = this.getStorageKey(formType);
@@ -76,9 +60,6 @@ export class AutosaveStorageService {
     }
   }
 
-  /**
-   * Get all saved form types
-   */
   getAllSavedForms(): string[] {
     const savedForms: string[] = [];
     
@@ -99,9 +80,6 @@ export class AutosaveStorageService {
     return savedForms;
   }
 
-  /**
-   * Clean up expired data
-   */
   cleanupExpiredData(): void {
     const allForms = this.getAllSavedForms();
     
@@ -116,7 +94,6 @@ export class AutosaveStorageService {
             this.clearFormData(formType);
           }
         } catch (error) {
-          // If data is corrupted, remove it
           localStorage.removeItem(storageKey);
         }
       }
