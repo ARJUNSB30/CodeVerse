@@ -1,24 +1,4 @@
-// import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-// @Component({
-//   selector: 'app-autosave',
-//   standalone: false,
-//   templateUrl: './autosave.component.html',
-//   styleUrl: './autosave.component.css'
-// })
-// export class AutosaveComponent {
-
-//   @Input() value: boolean = true;
-//   @Input() activeLabel: string = 'Active';
-//   @Input() inactiveLabel: string = 'Inactive';
-//   @Output() valueChange = new EventEmitter<boolean>();
-
-//   toggle() {
-//     this.value = !this.value;
-//     this.valueChange.emit(this.value);
-//   }
-// }
- 
 
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { AutosaveStorageService } from '../autosave-storage.service';
